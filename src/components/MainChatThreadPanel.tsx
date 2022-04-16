@@ -1,9 +1,30 @@
 import React from 'react';
+import { CommandBar, ICommandBarItemProps } from '@fluentui/react/lib/CommandBar';
 
-const MainChatThreadPanel = () => {
+export const MainChatThreadPanel = () => {
   return (
-    <div>HELLO WORLD</div>
+    <div>
+      <CommandBar
+        items={_items}
+      />
+    </div>
   );
 }
 
-export default MainChatThreadPanel;
+const _items: ICommandBarItemProps[] = [
+  {
+    key: 'newItem',
+    text: 'New',
+    iconProps: { iconName: 'Add' },
+  },
+  {
+    key: 'edit',
+    text: 'Edit',
+    iconProps: { iconName: 'Edit' },
+  },
+  {
+    key: 'delete',
+    text: 'Delete',
+    iconProps: { iconName: 'Delete' },
+  },
+];

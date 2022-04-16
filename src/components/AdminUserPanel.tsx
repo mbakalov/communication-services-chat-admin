@@ -16,9 +16,15 @@ export const AdminUserPanel = (props: AdminUserPanelProps) => {
   const onGenerateClicked = async () => {
     const client = props.identityClient;
     if (client) {
-      const { user, token } = await client.createUserAndToken(["chat"]);
-      setUserId(user.communicationUserId);
-      setToken(token);
+      // If we have been given an existing user - generate a token for them
+      if (userId !== '') {
+        const token = await client.getToken({ communicationUserId: userId }, ["chat"]);
+        setToken(token.token);
+      } else { // Otherwise - create both user and token
+        const { user, token } = await client.createUserAndToken(["chat"]);
+        setUserId(user.communicationUserId);
+        setToken(token);
+      }
     }
   }
 
@@ -40,6 +46,7 @@ export const AdminUserPanel = (props: AdminUserPanelProps) => {
       <TextField
         label="Access Token"
         value={token}
+        readOnly
         />
       <PrimaryButton text="Generate" style={{width: '100px'}} onClick={onGenerateClicked} />
     </Stack>
