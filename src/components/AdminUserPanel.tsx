@@ -1,37 +1,20 @@
-import { CommunicationIdentityClient } from "@azure/communication-identity";
-
 import React, { useState } from 'react';
 import { TextField } from '@fluentui/react/lib/TextField';
 import { Stack } from '@fluentui/react/lib/Stack';
 import { PrimaryButton } from '@fluentui/react/lib/Button';
 
 export interface AdminUserPanelProps {
-  identityClient: CommunicationIdentityClient | undefined
+  userId: string,
+  token: string,
+  onGenerateClicked: () => Promise<void>,
+  onUserIdChanged: (newUserId: string) => void;
 }
 
 export const AdminUserPanel = (props: AdminUserPanelProps) => {
-  const [userId, setUserId] = useState('');
-  const [token, setToken] = useState('');
 
-  const onGenerateClicked = async () => {
-    const client = props.identityClient;
-    if (client) {
-      // If we have been given an existing user - generate a token for them
-      if (userId !== '') {
-        const token = await client.getToken({ communicationUserId: userId }, ["chat"]);
-        setToken(token.token);
-      } else { // Otherwise - create both user and token
-        const { user, token } = await client.createUserAndToken(["chat"]);
-        setUserId(user.communicationUserId);
-        setToken(token);
-      }
-    }
-  }
-
-  const onUserIdChange = (_event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
+  const onUserIdChanged = (_event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
     if (newValue) {
-      setUserId(newValue);
-      setToken('');
+      props.onUserIdChanged(newValue);
     }
   }
 
@@ -40,15 +23,15 @@ export const AdminUserPanel = (props: AdminUserPanelProps) => {
       <TextField
         label="User Id"
         placeholder="Paste existing User Id or press 'Generate'"
-        value={userId}
-        onChange={onUserIdChange}
+        value={props.userId}
+        onChange={onUserIdChanged}
         />
       <TextField
         label="Access Token"
-        value={token}
+        value={props.token}
         readOnly
         />
-      <PrimaryButton text="Generate" style={{width: '100px'}} onClick={onGenerateClicked} />
+      <PrimaryButton text="Generate" style={{width: '100px'}} onClick={props.onGenerateClicked} />
     </Stack>
   );
 }

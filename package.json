@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@azure/communication-chat": "^1.2.0",
     "@azure/communication-common": "^2.0.0",
     "@azure/communication-identity": "^1.1.0-beta.2",
     "@fluentui/react": "^8.65.0",
