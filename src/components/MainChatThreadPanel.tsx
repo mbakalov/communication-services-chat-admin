@@ -50,9 +50,6 @@ export const MainChatThreadPanel = (props: MainChatThreadPanelProps) => {
   }
 
   const addNewThreadClicked = (ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>) => {
-
-    console.log('Add new clicked');
-
     const addNewThread = async () => {
       if (chatClient) {
         const createChatThreadRequest = {

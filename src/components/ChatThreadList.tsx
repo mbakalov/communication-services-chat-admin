@@ -44,7 +44,7 @@ export const ChatThreadList = (props: ChatThreadListProps) => {
   }
 
   if (chatThreads.length === 0) {
-    return <div>There are no chat threads for this user. Use the 'New' button to create a thread.</div>;
+    return <div>There are no chat threads for this user. Use the 'New chat thread' button to create a thread.</div>;
   }
 
   return (

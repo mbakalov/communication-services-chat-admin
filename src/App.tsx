@@ -3,6 +3,7 @@ import { CommunicationIdentityClient } from "@azure/communication-identity";
 
 import React, { useState } from 'react';
 import { TextField } from '@fluentui/react/lib/TextField';
+import { Header } from './components/Header';
 import { AdminUserPanel } from './components/AdminUserPanel';
 import { MainChatThreadPanel } from './components/MainChatThreadPanel';
 
@@ -51,6 +52,7 @@ const App = () => {
 
   return (
     <>
+      <Header />
       <TextField
         styles={{ root: { width: 650 }}}
         label="Connection String"
