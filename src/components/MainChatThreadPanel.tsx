@@ -6,7 +6,7 @@ import { CommandBar, ICommandBarItemProps } from '@fluentui/react/lib/CommandBar
 import { ChatThreadList } from './ChatThreadList';
 
 // Limit number of threads to load and show on screen
-const MAX_CHAT_THREADS = 10;
+const MAX_CHAT_THREADS = 20;
 
 export interface MainChatThreadPanelProps {
   endpointUrl: string,
@@ -84,19 +84,21 @@ export const MainChatThreadPanel = (props: MainChatThreadPanelProps) => {
   const _items: ICommandBarItemProps[] = [
     {
       key: 'newItem',
-      text: 'New',
+      text: 'New chat thread',
       iconProps: { iconName: 'Add' },
-      onClick: addNewThreadClicked
+      onClick: addNewThreadClicked,
     },
     {
       key: 'edit',
-      text: 'Edit',
+      text: 'Edit (TBD)',
       iconProps: { iconName: 'Edit' },
+      disabled: true
     },
     {
       key: 'delete',
-      text: 'Delete',
+      text: 'Delete (TBD)',
       iconProps: { iconName: 'Delete' },
+      disabled: true
     },
   ];
 
@@ -106,6 +108,7 @@ export const MainChatThreadPanel = (props: MainChatThreadPanelProps) => {
         items={_items}
       />
       <ChatThreadList
+        enabled={token !== ''}
         chatThreads={chatThreads}
         onLoadChatThreadsClicked={onLoadChatThreadsClicked}
         />

@@ -7,12 +7,13 @@ import { PrimaryButton } from '@fluentui/react/lib/Button';
 import { ChatThread } from './ChatThread'
 
 export interface ChatThreadListProps {
+  enabled: boolean,
   chatThreads?: ChatThreadItem[],
   onLoadChatThreadsClicked: () => Promise<void>
 }
 
 export const ChatThreadList = (props: ChatThreadListProps) => {
-  const { chatThreads, onLoadChatThreadsClicked } = props;
+  const { enabled, chatThreads, onLoadChatThreadsClicked } = props;
 
   const buttonStyles = {
     root: {
@@ -34,6 +35,7 @@ export const ChatThreadList = (props: ChatThreadListProps) => {
       <div className={mergeStyles(containerStyles)}>
         <PrimaryButton
           text="Load Chat Threads"
+          disabled={!enabled}
           onClick={onLoadChatThreadsClicked}
           styles={buttonStyles}
         /> 

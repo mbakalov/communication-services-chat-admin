@@ -7,15 +7,13 @@ export interface AdminUserPanelProps {
   userId: string,
   token: string,
   onGenerateClicked: () => Promise<void>,
-  onUserIdChanged: (newUserId: string) => void;
+  onUserIdChanged: (newUserId?: string) => void;
 }
 
 export const AdminUserPanel = (props: AdminUserPanelProps) => {
 
   const onUserIdChanged = (_event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
-    if (newValue) {
-      props.onUserIdChanged(newValue);
-    }
+    props.onUserIdChanged(newValue);
   }
 
   return (
@@ -31,7 +29,7 @@ export const AdminUserPanel = (props: AdminUserPanelProps) => {
         value={props.token}
         readOnly
         />
-      <PrimaryButton text="Generate" style={{width: '100px'}} onClick={props.onGenerateClicked} />
+      <PrimaryButton text="Generate User and/or Token" style={{width: '250px'}} onClick={props.onGenerateClicked} />
     </Stack>
   );
 }

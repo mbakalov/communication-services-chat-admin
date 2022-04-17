@@ -44,8 +44,8 @@ const App = () => {
     }
   }
 
-  const onUserIdChanged = (newUserId: string) => {
-    setUserId(newUserId);
+  const onUserIdChanged = (newUserId?: string) => {
+    setUserId(newUserId ?? '');
     setToken('');
   }
 
@@ -65,6 +65,7 @@ const App = () => {
         onGenerateClicked={onGenerateClicked}
         onUserIdChanged={onUserIdChanged} />
       <MainChatThreadPanel
+        key={userId}
         endpointUrl={endpointUrl}
         token={token}
         userId={userId}
