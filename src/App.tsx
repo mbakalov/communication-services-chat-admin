@@ -67,6 +67,7 @@ const App = () => {
       <MainChatThreadPanel
         endpointUrl={endpointUrl}
         token={token}
+        userId={userId}
       />
     </>
   );

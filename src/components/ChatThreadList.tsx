@@ -4,6 +4,8 @@ import React from 'react';
 import { mergeStyles } from '@fluentui/react';
 import { PrimaryButton } from '@fluentui/react/lib/Button';
 
+import { ChatThread } from './ChatThread'
+
 export interface ChatThreadListProps {
   chatThreads?: ChatThreadItem[],
   onLoadChatThreadsClicked: () => Promise<void>
@@ -27,13 +29,31 @@ export const ChatThreadList = (props: ChatThreadListProps) => {
 
   const showLoadButton = !chatThreads;
 
-  return (showLoadButton ?
-    <div className={mergeStyles(containerStyles)}>
+  if (showLoadButton) {
+    return (
+      <div className={mergeStyles(containerStyles)}>
         <PrimaryButton
           text="Load Chat Threads"
           onClick={onLoadChatThreadsClicked}
           styles={buttonStyles}
         /> 
-    </div> : <></>
+      </div>
+    );
+  }
+
+  if (chatThreads.length === 0) {
+    return <div>There are no chat threads for this user. Use the 'New' button to create a thread.</div>;
+  }
+
+  return (
+    <div>
+      <ul>
+        {chatThreads.map(thread =>
+          <li key={thread.id}>
+            <ChatThread thread={thread} />
+          </li>
+        )}
+      </ul>
+    </div>
   );
 }
