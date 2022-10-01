@@ -2,10 +2,11 @@ import { parseConnectionString } from '@azure/communication-common';
 import { CommunicationIdentityClient } from "@azure/communication-identity";
 
 import React, { useState } from 'react';
-import { TextField } from '@fluentui/react/lib/TextField';
+import { TextField, Pivot, PivotItem } from '@fluentui/react';
 import { Header } from './components/Header';
 import { AdminUserPanel } from './components/AdminUserPanel';
 import { MainChatThreadPanel } from './components/MainChatThreadPanel';
+import { TestDataPanel } from './components/TestDataPanel';
 
 const App = () => {
   const [connectionString, setConnectionString] = useState('');
@@ -66,12 +67,20 @@ const App = () => {
         token={token}
         onGenerateClicked={onGenerateClicked}
         onUserIdChanged={onUserIdChanged} />
-      <MainChatThreadPanel
-        key={userId}
-        endpointUrl={endpointUrl}
-        token={token}
-        userId={userId}
-      />
+      <Pivot>
+        <PivotItem headerText='Browse Threads'>
+          <MainChatThreadPanel
+            key={userId}
+            endpointUrl={endpointUrl}
+            token={token}
+            userId={userId}
+          />
+        </PivotItem>
+        <PivotItem headerText='Create Test Data'>
+          <TestDataPanel />
+        </PivotItem>
+      </Pivot>
+      
     </>
   );
 }
