@@ -2,6 +2,7 @@ import {
   Checkbox,
   DefaultButton,
   Stack,
+  Text,
   mergeStyles
 } from '@fluentui/react';
 
@@ -9,17 +10,19 @@ import MonacoEditor from 'react-monaco-editor';
 
 export const TestDataPanel = () => {
 
-  const editorStyles = mergeStyles({
+  const inputPanelStyles = mergeStyles({
     float: 'left',
-    width: '50%',
-    border: '1px solid darkgray'
+    width: '50%'
   });
   
-  const resultsStyles = mergeStyles({
+  const resultsPanelStyles = mergeStyles({
     float: 'right',
-    width: '49%',
+    width: '49%'
+  });
+
+  const editorStyles = mergeStyles({
     border: '1px solid darkgray'
-  });;
+  });
 
   return (
     <Stack tokens={{childrenGap: 10, padding: 10}}>
@@ -30,22 +33,26 @@ export const TestDataPanel = () => {
         </Stack.Item>
       </Stack>
       <div>
-        <div className={editorStyles}>
+        <div className={inputPanelStyles}>
+          <Text variant='mediumPlus'>Input data</Text>
           <MonacoEditor
             language='json'
             height='600px'
             options={{
               minimap: {enabled: false}
             }}
+            className={editorStyles}
           />
         </div>
-        <div className={resultsStyles}>
-        <MonacoEditor
-            language='json'
-            height='600px'
-            options={{
-              minimap: {enabled: false}
-            }}
+        <div className={resultsPanelStyles}>
+          <Text variant='mediumPlus'>Upload results</Text>
+          <MonacoEditor
+              language='json'
+              height='600px'
+              options={{
+                minimap: {enabled: false}
+              }}
+              className={editorStyles}
           />
         </div>
       </div>
