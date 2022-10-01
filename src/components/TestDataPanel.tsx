@@ -11,10 +11,15 @@ export const TestDataPanel = () => {
 
   const editorStyles = mergeStyles({
     float: 'left',
-    width: '50%'
+    width: '50%',
+    border: '1px solid darkgray'
   });
   
-  const resultsStyles = editorStyles;
+  const resultsStyles = mergeStyles({
+    float: 'right',
+    width: '49%',
+    border: '1px solid darkgray'
+  });;
 
   return (
     <Stack tokens={{childrenGap: 10, padding: 10}}>
@@ -28,9 +33,21 @@ export const TestDataPanel = () => {
         <div className={editorStyles}>
           <MonacoEditor
             language='json'
+            height='600px'
+            options={{
+              minimap: {enabled: false}
+            }}
           />
         </div>
-        <div className={resultsStyles}>RESULTS</div>
+        <div className={resultsStyles}>
+        <MonacoEditor
+            language='json'
+            height='600px'
+            options={{
+              minimap: {enabled: false}
+            }}
+          />
+        </div>
       </div>
     </Stack>
   );
