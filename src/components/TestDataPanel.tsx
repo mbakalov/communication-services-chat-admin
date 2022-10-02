@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import {
   Checkbox,
   DefaultButton,
@@ -12,14 +12,22 @@ import MonacoEditor from 'react-monaco-editor';
 export const TestDataPanel = () => {
   const [isUploadInProgress, setIsUploadInProgress] = useState<boolean>(false);
 
+  const editorRef = useRef<MonacoEditor>(null);
+
   const onUploadClicked = () => {
     const doUpload = async () => {
       console.log('doUpload is happening');
       setIsUploadInProgress(true);
 
       setTimeout(() => {
-        console.log('do upload done');
-        setIsUploadInProgress(false);
+        if (editorRef.current?.editor) {
+          const model = editorRef.current?.editor.getModel();
+          const value = model?.getValue();
+
+          console.log('this code is', value);
+          console.log('do upload done');
+          setIsUploadInProgress(false);
+        }
       }, 1000);
     }
 
@@ -57,6 +65,7 @@ export const TestDataPanel = () => {
         <div className={inputPanelStyles}>
           <Text variant='mediumPlus'>Input data</Text>
           <MonacoEditor
+            ref={editorRef}
             language='json'
             height='600px'
             options={{
