@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   Checkbox,
   DefaultButton,
@@ -9,6 +10,21 @@ import {
 import MonacoEditor from 'react-monaco-editor';
 
 export const TestDataPanel = () => {
+  const [isUploadInProgress, setIsUploadInProgress] = useState<boolean>(false);
+
+  const onUploadClicked = () => {
+    const doUpload = async () => {
+      console.log('doUpload is happening');
+      setIsUploadInProgress(true);
+
+      setTimeout(() => {
+        console.log('do upload done');
+        setIsUploadInProgress(false);
+      }, 1000);
+    }
+
+    doUpload();
+  }
 
   const inputPanelStyles = mergeStyles({
     float: 'left',
@@ -27,7 +43,12 @@ export const TestDataPanel = () => {
   return (
     <Stack tokens={{childrenGap: 10, padding: 10}}>
       <Stack horizontal tokens={{childrenGap: 10}}>
-        <DefaultButton text='Upload' />
+        <DefaultButton
+          text='Upload'
+          iconProps={isUploadInProgress ? { iconName: 'Refresh'} : undefined}
+          onClick={onUploadClicked}
+          disabled={isUploadInProgress}
+        />
         <Stack.Item align='center'>
           <Checkbox label='Add current user to all threads' disabled defaultChecked />
         </Stack.Item>
