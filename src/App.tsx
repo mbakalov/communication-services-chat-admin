@@ -77,7 +77,11 @@ const App = () => {
           />
         </PivotItem>
         <PivotItem headerText='Create Test Data'>
-          <TestDataPanel />
+          {identityClient && <TestDataPanel
+            endpointUrl={endpointUrl}
+            adminToken={token}
+            identityClient={identityClient}
+          />}
         </PivotItem>
       </Pivot>
       
