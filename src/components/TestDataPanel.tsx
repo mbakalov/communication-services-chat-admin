@@ -9,26 +9,45 @@ import {
 
 import MonacoEditor from 'react-monaco-editor';
 
-export const TestDataPanel = () => {
+import { CommunicationIdentityClient } from '@azure/communication-identity';
+
+import { upload, UploadRequest } from './dataUploader';
+export interface TestDataPanelProps {
+  endpointUrl: string,
+  adminToken: string,
+  identityClient: CommunicationIdentityClient
+}
+
+export const TestDataPanel = (props: TestDataPanelProps) => {
   const [isUploadInProgress, setIsUploadInProgress] = useState<boolean>(false);
+  const [uploadResult, setUploadResult] = useState('');
 
   const editorRef = useRef<MonacoEditor>(null);
 
   const onUploadClicked = () => {
     const doUpload = async () => {
-      console.log('doUpload is happening');
-      setIsUploadInProgress(true);
+      if (editorRef.current?.editor) {
+        const model = editorRef.current?.editor.getModel();
+        const value = model?.getValue();
+        
+        if (value) {
+          const valueJson = JSON.parse(value) as UploadRequest;
 
-      setTimeout(() => {
-        if (editorRef.current?.editor) {
-          const model = editorRef.current?.editor.getModel();
-          const value = model?.getValue();
+          setIsUploadInProgress(true);
+          setUploadResult('');
 
-          console.log('this code is', value);
-          console.log('do upload done');
+          const uploadResult = await upload(
+            props.identityClient,
+            props.endpointUrl,
+            props.adminToken,
+            valueJson
+          );
+        
+          const uploadString = JSON.stringify(uploadResult, null, 2);
+          setUploadResult(uploadString);
           setIsUploadInProgress(false);
         }
-      }, 1000);
+      }
     }
 
     doUpload();
@@ -83,6 +102,7 @@ export const TestDataPanel = () => {
                 minimap: {enabled: false}
               }}
               className={editorStyles}
+              value={uploadResult}
           />
         </div>
       </div>
