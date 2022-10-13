@@ -18,9 +18,13 @@ export interface TestDataPanelProps {
   identityClient: CommunicationIdentityClient
 }
 
+const sampleData = require('../data/lotr.json');
+
 export const TestDataPanel = (props: TestDataPanelProps) => {
   const [isUploadInProgress, setIsUploadInProgress] = useState<boolean>(false);
   const [uploadResult, setUploadResult] = useState('');
+
+  const initialSampleData = JSON.stringify(sampleData, null, 2);
 
   const editorRef = useRef<MonacoEditor>(null);
 
@@ -91,6 +95,7 @@ export const TestDataPanel = (props: TestDataPanelProps) => {
               minimap: {enabled: false}
             }}
             className={editorStyles}
+            defaultValue={initialSampleData}
           />
         </div>
         <div className={resultsPanelStyles}>
